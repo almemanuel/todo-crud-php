@@ -29,8 +29,7 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - `app/Controllers/Home.php` — controller de exemplo (GET `/` → `Home::index`)
 - `public/index.php` — entry point da aplicação web
 - `spark` — CLI tool para migrations, seeds, server, etc.
-- `env` — template de `.env` (copiar e configurar baseURL, database, etc.)
-- `.env.example` — template de variáveis de ambiente (incluindo credenciais Postgres)
+- `.env.example` — template de variáveis de ambiente (baseURL, credenciais Postgres, etc.)
 - `phpunit.dist.xml` — config de testes (PHPUnit 10.5.16)
 - `app/Config/Database.php` — conexão DB (padrão: MySQLi, SQLite, Postgres)
 
