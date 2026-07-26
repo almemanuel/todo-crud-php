@@ -23,7 +23,7 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 
 ## Arquivos-chave
 - `composer.json` — dependências: `codeigniter4/framework:^4.7`, dev: faker, vfsstream, phpunit
-- `app/Config/Routes.php` — roteamento (ex: `$routes->get('/', 'Home::index')`)
+- `app/Config/Routes.php` — roteamento: GET `/` → TaskController::index; resource `tasks` define rotas CRUD (index, new, create, edit, update, delete) para TaskController
 - `app/Config/Services.php` — DI container (carregamento de serviços)
 - `app/Controllers/BaseController.php` — classe base para controllers; método `initController()` para setup
 - `app/Controllers/Home.php` — controller de exemplo (GET `/` → `Home::index`)
