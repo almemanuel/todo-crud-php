@@ -3,4 +3,9 @@
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
-$routes->get('/', 'Home::index');
+$routes->get('/', 'TaskController::index');
+
+$routes->resource('tasks', [
+    'controller' => 'TaskController',
+    'only' => ['index', 'new', 'create', 'edit', 'update', 'delete']
+]);
