@@ -26,7 +26,8 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - `app/Config/Routes.php` — roteamento: GET `/` → TaskController::index; resource `tasks` define rotas CRUD (index, new, create, edit, update, delete) para TaskController
 - `app/Config/Services.php` — DI container (carregamento de serviços)
 - `app/Controllers/BaseController.php` — classe base para controllers; método `initController()` para setup
-- `app/Controllers/Home.php` — controller de exemplo (GET `/` → `Home::index`)
+- `app/Controllers/Home.php` — controller legado de exemplo (não mais invocado pelas rotas principais)
+- `app/Models/TaskModel.php` — modelo de Task (placeholder vazio, em desenvolvimento)
 - `public/index.php` — entry point da aplicação web
 - `spark` — CLI tool para migrations, seeds, server, etc.
 - `.env.example` — template de variáveis de ambiente (baseURL, credenciais Postgres, etc.)
@@ -43,7 +44,7 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - Métodos protegidos/privados em controllers; public apenas para actions
 - Helpers carregados via `$this->helpers = [...]` em `BaseController::initController()`
 - Views renderizadas com `view('path', $data)` (helper ou service)
-- Modelos: não há exemplo ainda, mas segue padrão `App\Models\NomeModel extends Model`
+- Modelos: TaskModel.php é o modelo principal em desenvolvimento; segue padrão `App\Models\NomeModel extends Model`
 - Migrações em `app/Database/Migrations/`; seeds em `app/Database/Seeds/`
 - Testes em `tests/` espelhando estrutura: `tests/unit/`, `tests/database/`, etc.
 - Sem Eloquent nativo — usa Query Builder do CI4
