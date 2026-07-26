@@ -7,6 +7,7 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - `app/Config/` — configurações do framework (database, routes, services, etc.)
 - `app/Controllers/` — controllers MVC. `BaseController` é classe abstrata para herança
 - `app/Models/` — models (Eloquent-like ou Query Builder)
+- `app/Entities/` — entidades (data objects estendendo CodeIgniter\Entity)
 - `app/Views/` — templates/views PHP
 - `app/Database/Migrations/` — versionamento de schema
 - `app/Database/Seeds/` — seed de dados
@@ -27,7 +28,8 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - `app/Config/Services.php` — DI container (carregamento de serviços)
 - `app/Controllers/BaseController.php` — classe base para controllers; método `initController()` para setup
 - `app/Controllers/Home.php` — controller legado de exemplo (não mais invocado pelas rotas principais)
-- `app/Models/TaskModel.php` — modelo de Task (placeholder vazio, em desenvolvimento)
+- `app/Entities/Task.php` — entidade Task (extends CodeIgniter\Entity). Casts: id (int), title, description, status. Métodos: isPendente(), isEmAndamento(), isConcluida() para verificar estado
+- `app/Models/TaskModel.php` — modelo de Task (extends Model). Tabela: `tasks`, returnType Task::class. Validação: title obrigatório (max 255), status in_list [pendente, em andamento, concluída]. Timestamps automáticos (created_at, updated_at)
 - `public/index.php` — entry point da aplicação web
 - `spark` — CLI tool para migrations, seeds, server, etc.
 - `.env.example` — template de variáveis de ambiente (baseURL, credenciais Postgres, etc.)
@@ -44,7 +46,8 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - Métodos protegidos/privados em controllers; public apenas para actions
 - Helpers carregados via `$this->helpers = [...]` em `BaseController::initController()`
 - Views renderizadas com `view('path', $data)` (helper ou service)
-- Modelos: TaskModel.php é o modelo principal em desenvolvimento; segue padrão `App\Models\NomeModel extends Model`
+- Entidades: Task.php em `App\Entities\` estende CodeIgniter\Entity; usado como returnType no modelo
+- Modelos: TaskModel.php é o modelo principal; segue padrão `App\Models\NomeModel extends Model`; retorna entidades tipadas
 - Migrações em `app/Database/Migrations/`; seeds em `app/Database/Seeds/`
 - Testes em `tests/` espelhando estrutura: `tests/unit/`, `tests/database/`, etc.
 - Sem Eloquent nativo — usa Query Builder do CI4
