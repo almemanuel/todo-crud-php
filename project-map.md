@@ -27,7 +27,6 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - `app/Config/Routes.php` — roteamento: GET `/` → TaskController::index; resource `tasks` define rotas CRUD (index, new, create, edit, update, delete) para TaskController
 - `app/Config/Services.php` — DI container (carregamento de serviços)
 - `app/Controllers/BaseController.php` — classe base para controllers; método `initController()` para setup
-- `app/Controllers/Home.php` — controller legado de exemplo (não mais invocado pelas rotas principais)
 - `app/Entities/Task.php` — entidade Task (extends CodeIgniter\Entity). Casts: id (int), title, description, status. Métodos: isPendente(), isEmAndamento(), isConcluida() para verificar estado
 - `app/Models/TaskModel.php` — modelo de Task (extends Model). Tabela: `tasks`, returnType Task::class. Validação: title obrigatório (max 255), status in_list [pendente, em andamento, concluída]. Timestamps automáticos (created_at, updated_at)
 - `public/index.php` — entry point da aplicação web
