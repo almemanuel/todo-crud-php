@@ -49,9 +49,17 @@ class TaskController extends ResourceController {
             return $this->failNotFound('Tarefa não encontrada.');
         }
 
-        $data = $this->request->getJSON(true) ?? $this->request->getRawInput();
+        $data = $this->request->getJSON(true) 
+            ?? $this->request->getRawInput() 
+            ?? $this->request->getVar();
 
-        $this->model->setValidationRule('status', 'required|in_list[pendente,em andamento,concluída]');
+        if (empty($data) || !is_array($data)) {
+            return $this->failValidationErrors(['error' => 'Nenhum dado fornecido para atualização.']);
+        }
+
+        if (isset($data['status'])) {
+            $this->model->setValidationRule('status', 'in_list[pendente,em andamento,concluída]');
+        }
 
         if (!$this->model->validate($data)) {
             return $this->failValidationErrors($this->model->errors());
