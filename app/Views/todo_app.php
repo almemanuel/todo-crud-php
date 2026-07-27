@@ -93,27 +93,23 @@
         </div>
     </div>
 
-    <!-- IMPORTANTE: O JS do Bootstrap DEVE vir ANTES do nosso script customizado -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         const API_URL = '/tasks';
         let editModalInstance = null;
-        let tasks = []; // Cache to store tasks in memory and avoid inline string issues
+        let tasks = [];
 
-        // Helper function to get the current CSRF token hash from the meta tag
         function getCsrfToken() {
             const metaToken = document.querySelector('meta[name="csrf-token"]');
             return metaToken ? metaToken.getAttribute('content') : '';
         }
 
-        // Helper function to get the CSRF header name
         function getCsrfHeader() {
             const metaHeader = document.querySelector('meta[name="csrf-header"]');
             return metaHeader ? metaHeader.getAttribute('content') : 'X-CSRF-TOKEN';
         }
 
-        // Aguarda todo o HTML carregar antes de manipular o DOM
         document.addEventListener('DOMContentLoaded', () => {
             // Inicializa o modal com segurança
             const modalEl = document.getElementById('editModal');
@@ -121,7 +117,6 @@
                 editModalInstance = new bootstrap.Modal(modalEl);
             }
 
-            // Atrela o submit do form com segurança
             const form = document.getElementById('task-form');
             if (form) {
                 form.addEventListener('submit', handleCreateTask);
@@ -136,7 +131,6 @@
             'concluída': '<span class="badge bg-success">Concluída</span>'
         };
 
-        // 1. READ (Listar todas)
         async function fetchTasks() {
             const list = document.getElementById('task-list');
             if (!list) return;
@@ -146,8 +140,7 @@
             try {
                 const res = await fetch(API_URL);
                 const responseData = await res.json();
-                
-                // Trata o retorno se for { data: [...] } ou direto [...]
+                    
                 let fetchedTasks = responseData;
                 if (responseData && responseData.data && Array.isArray(responseData.data)) {
                     fetchedTasks = responseData.data;
@@ -155,7 +148,6 @@
                     fetchedTasks = responseData.tasks;
                 }
 
-                // Armazena em cache na memória global
                 tasks = Array.isArray(fetchedTasks) ? fetchedTasks : [];
 
                 list.innerHTML = '';
@@ -174,7 +166,6 @@
                         ? `<p class="mb-0 text-muted small mt-1">${escapeHtml(task.description)}</p>` 
                         : '';
 
-                    // O botão Editar agora passa apenas o ID da tarefa para o modal
                     li.innerHTML = `
                         <div class="d-flex align-items-start justify-content-between gap-2">
                             <div class="flex-grow-1">
@@ -205,7 +196,6 @@
             }
         }
 
-        // 2. CREATE
         async function handleCreateTask(e) {
             e.preventDefault();
             const titleInput = document.getElementById('task-title');
@@ -245,7 +235,6 @@
             }
         }
 
-        // 3. UPDATE
         function openEditModal(id) {
             const task = tasks.find(t => t.id === id);
             if (!task) {
@@ -298,7 +287,6 @@
             }
         }
 
-        // 4. DELETE
         async function deleteTask(id) {
             if (!confirm('Deseja realmente excluir esta tarefa?')) return;
             try {
