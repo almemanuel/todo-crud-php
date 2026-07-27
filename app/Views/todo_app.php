@@ -110,6 +110,21 @@
             return metaHeader ? metaHeader.getAttribute('content') : 'X-CSRF-TOKEN';
         }
 
+        // Helper function to handle API response errors safely, including HTTP 403 Forbidden
+        async function handleResponseError(res, defaultMessage) {
+            if (res.status === 403) {
+                alert('Erro de segurança (403): Sessão expirada ou ação não autorizada. Por favor, atualize a página.');
+                return;
+            }
+            try {
+                const errData = await res.json();
+                const messages = errData.messages || errData.errors || { error: defaultMessage };
+                alert('Falha: ' + Object.values(messages).join(', '));
+            } catch (err) {
+                alert(defaultMessage);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Inicializa o modal com segurança
             const modalEl = document.getElementById('editModal');
@@ -219,9 +234,7 @@
                 });
 
                 if (!res.ok) {
-                    const errData = await res.json();
-                    const messages = errData.messages || errData.errors || { error: 'Erro ao criar tarefa.' };
-                    alert('Falha ao criar tarefa: ' + Object.values(messages).join(', '));
+                    await handleResponseError(res, 'Falha ao criar tarefa.');
                     return;
                 }
 
@@ -271,9 +284,7 @@
                 });
 
                 if (!res.ok) {
-                    const errData = await res.json();
-                    const messages = errData.messages || errData.errors || { error: 'Erro ao editar tarefa.' };
-                    alert('Falha ao salvar alterações: ' + Object.values(messages).join(', '));
+                    await handleResponseError(res, 'Falha ao salvar alterações.');
                     return;
                 }
 
@@ -298,9 +309,7 @@
                 });
 
                 if (!res.ok) {
-                    const errData = await res.json();
-                    const messages = errData.messages || errData.errors || { error: 'Erro ao excluir tarefa.' };
-                    alert('Falha ao excluir tarefa: ' + Object.values(messages).join(', '));
+                    await handleResponseError(res, 'Falha ao excluir tarefa.');
                     return;
                 }
 
