@@ -27,18 +27,18 @@ class TaskController extends ResourceController {
         return $this->respond($task);
     }
 
-    // POST /tasks
     public function create() {
         $data = $this->request->getJSON(true) ?? $this->request->getPost();
 
-        if (!$this->model->insert($data)) {
+        $id = $this->model->insert($data);
+
+        if (!$id) {
             return $this->failValidationErrors($this->model->errors());
         }
 
-        $taskId = $this->model->getInsertID();
-        $newTask = $this->model->find($taskId);
+        $task = $this->model->find($id);
 
-        return $this->respondCreated($task, 'Tarefa criada com sucesso.');
+        return $this->respondCreated($task);
     }
 
     // PUT/PATCH /tasks/{id}

@@ -1,0 +1,22 @@
+info:
+  name: Update task
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: http://localhost:8080/tasks/6
+  body:
+    type: json
+    data: |-
+      {
+        "description": "blablabla",
+        "status": "em andamento"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

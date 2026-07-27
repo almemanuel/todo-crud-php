@@ -6,12 +6,21 @@ use CodeIgniter\Entity\Entity;
 
 class Task extends Entity
 {
+    protected $attributes = [
+        'id'          => null,
+        'title'       => null,
+        'description' => null,
+        'status'      => 'pendente',
+        'created_at'  => null,
+        'updated_at'  => null,
+    ];
+
     protected $datamap = [];
 
     protected $casts = [
         'id' => 'int',
         'title' => 'string',
-        'description' => 'string',
+        'description' => '?string',
         'status' => 'string'
     ];
 
@@ -22,16 +31,16 @@ class Task extends Entity
 
     public function isPendente(): bool
     {
-        return $this->status === 'pendente';
+        return $this->attributes['status'] === 'pending' || $this->attributes['status'] === 'pendente';
     }
 
     public function isEmAndamento(): bool
     {
-        return $this->status === 'em andamento';
+        return $this->attributes['status'] === 'in_progress' || $this->attributes['status'] === 'em_andamento';
     }
 
     public function isConcluida(): bool
     {
-        return $this->status === 'concluída';
+        return $this->attributes['status'] === 'completed' || $this->attributes['status'] === 'concluida';
     }
 }
