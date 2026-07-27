@@ -16,6 +16,21 @@ class TaskControllerTest extends CIUnitTestCase
 
     protected $namespace = 'App';
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        // Disable CSRF filter dynamically during Controller tests
+        $filtersConfig = config('Filters');
+        if (isset($filtersConfig->globals['before'])) {
+            foreach ($filtersConfig->globals['before'] as $key => $value) {
+                if ($value === 'csrf' || $key === 'csrf') {
+                    unset($filtersConfig->globals['before'][$key]);
+                }
+            }
+        }
+    }
+
     // --------------------------------------------------------------------
     // 1. LISTAGEM (GET /tasks)
     // --------------------------------------------------------------------
@@ -88,7 +103,10 @@ class TaskControllerTest extends CIUnitTestCase
             'title' => 'Inexistente'
         ];
 
-        $result = $this->put('tasks/999999', $payload);
+        $result = $this->withHeaders([
+            'Content-Type' => 'application/json'
+        ])->withBody(json_encode($payload))
+        ->put('tasks/999999');
 
         $result->assertStatus(404);
     }

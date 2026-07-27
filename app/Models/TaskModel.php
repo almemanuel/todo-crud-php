@@ -27,7 +27,7 @@ class TaskModel extends Model
     protected $validationRules = [
         'title' => 'required|max_length[255]',
         'description' => 'permit_empty',
-        'status' => 'permit_empty|in_list[pendente,em andamento,concluída]'
+        'status' => ['permit_empty', 'in_list[pendente,em andamento,concluída]']
     ];
 
     protected $validationMessages = [

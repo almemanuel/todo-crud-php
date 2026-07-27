@@ -3,7 +3,7 @@
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
-$routes->get('/', 'TaskController::index');
+$routes->get('/', 'Home::index');
 
 $routes->resource('tasks', [
     'controller' => 'TaskController',

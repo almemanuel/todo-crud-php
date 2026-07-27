@@ -1,11 +1,11 @@
 info:
-  name: Delete task
+  name: Get
   type: http
-  seq: 6
+  seq: 1
 
 http:
-  method: DELETE
-  url: http://localhost:8080/tasks/1
+  method: GET
+  url: http://localhost:8080/
   auth: inherit
 
 settings:
