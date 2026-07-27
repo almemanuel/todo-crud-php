@@ -32,7 +32,7 @@ Stack: PHP 8.2+, CodeIgniter 4.7, PostgreSQL 15
 - `app/Models/TaskModel.php` — modelo de Task (extends Model). Tabela: `tasks`, returnType Task::class. Validação: title obrigatório (max 255), status in_list [pendente, em andamento, concluída]. Timestamps automáticos (created_at, updated_at)
 - `public/index.php` — entry point da aplicação web
 - `spark` — CLI tool para migrations, seeds, server, etc.
-- `.env.example` — template de variáveis de ambiente: CI_ENVIRONMENT, APP_BASE_URL; credenciais Postgres (DB_HOST=db, DB_NAME, DB_USER, DB_PASS, DB_PORT=5432); mapeamento automático para `database.default.*`
+- `.env.example` — template de variáveis de ambiente: CI_ENVIRONMENT, APP_BASE_URL; credenciais Postgres (DB_HOST=db, DB_NAME, DB_USER, DB_PASS, DB_PORT=5432); charset/collation utf8 para `database.default.*`
 - `phpunit.dist.xml` — config de testes (PHPUnit 10.5.16)
 - `app/Config/Database.php` — conexão DB (padrão: MySQLi, SQLite, Postgres)
 
